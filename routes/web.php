@@ -55,6 +55,9 @@ Route::group(['middleware' => ['auth:user', 'ceklevel:admin']], function () {
     Route::get('/admin/addmahasiswa', [AdminController::class, 'add_mahasiswa']);
     Route::post('/admin/tambahmahasiswa', [AdminController::class, 'tambah_mahasiswa']);
 
+    //route untuk mencari data dosen
+    Route::get('/admin/caridosen', [AdminController::class, 'cari_dosen']);
+
     //route untuk edit data
     Route::get('/admin/editmahasiswa/{id}', [EditController::class, 'editmahasiswa']);
     Route::post('/admin/updatemahasiswa/{id}', [EditController::class, 'updatemahasiswa']);

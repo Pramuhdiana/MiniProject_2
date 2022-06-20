@@ -55,4 +55,10 @@ class AdminModel extends Authenticatable
     {
         return DB::delete('delete from tbl_riwayat where id = ?', [$id]); //fungsi untuk menghapus data by ID di tbl_mahasiswa
     }
+    public function caridosen($cari)
+    {
+        return DB::table('tbl_dosen')
+            ->where('nama', 'like', "%" . $cari . "%")
+            ->paginate();
+    }
 }

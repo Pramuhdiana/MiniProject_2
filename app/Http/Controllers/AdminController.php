@@ -52,20 +52,44 @@ class AdminController extends BaseController
     public function tambah()
     {
         //simpan data
-        //upload file 
-        $foto = Request()->foto;
-        $namafile = Request()->nama . '.' . $foto->extension();
-        $foto->move(public_path('foto'), $namafile);
+        //upload file jika admin upload foto
 
-        //masukan ke database
-        $data = [
-            'nama' => Request()->nama,
-            'level' => Request()->level,
-            'email' => Request()->email,
-            'password' => bcrypt(Request()->password),
-            'jeniskelamin' => Request()->jk,
-            'foto' => $namafile,
-        ];
+        if (Request()->foto <> "") {
+            $foto = Request()->foto;
+            $namafile = Request()->nama . '.' . $foto->extension();
+            $foto->move(public_path('foto'), $namafile);
+
+            //masukan ke database
+            $data = [
+                'nama' => Request()->nama,
+                'level' => Request()->level,
+                'email' => Request()->email,
+                'password' => bcrypt(Request()->password),
+                'jeniskelamin' => Request()->jk,
+                'foto' => $namafile,
+            ];
+        } else {
+            //jika admin tidak upload foto
+            if (Request()->jk = "Perempuan") {
+                $data = [
+                    'nama' => Request()->nama,
+                    'level' => "dosen",
+                    'email' => Request()->email,
+                    'password' => bcrypt(Request()->password),
+                    'jeniskelamin' => Request()->jk,
+                    'foto' => "defaultcw.png",
+                ];
+            } else {
+                $data = [
+                    'nama' => Request()->nama,
+                    'level' => "dosen",
+                    'email' => Request()->email,
+                    'password' => bcrypt(Request()->password),
+                    'jeniskelamin' => Request()->jk,
+                    'foto' => "default.png",
+                ];
+            }
+        }
         $this->AdminModel->tambahdata($data);
         return redirect()->route('datadosen')->with('Pesan', 'Data telah berhasil di tambahkan');
     }
@@ -79,22 +103,53 @@ class AdminController extends BaseController
     {
         //simpan data
         //upload file 
-        $foto = Request()->foto;
-        $namafile = Request()->nama . '.' . $foto->extension();
-        $foto->move(public_path('foto'), $namafile);
+        //jika user upload foto
+        if (Request()->foto <> "") {
+            $foto = Request()->foto;
+            $namafile = Request()->nama . '.' . $foto->extension();
+            $foto->move(public_path('foto'), $namafile);
 
-        //masukan ke database
-        $data = [
-            'nama' => Request()->nama,
-            'jurusan' => Request()->jurusan,
-            'level' => Request()->level,
-            'email' => Request()->email,
-            'password' => bcrypt(Request()->password),
-            'jeniskelamin' => Request()->jk,
-            'foto' => $namafile,
-            'wali' => "",
-            'catatan' => "",
-        ];
+            //masukan ke database
+            $data = [
+                'nama' => Request()->nama,
+                'jurusan' => Request()->jurusan,
+                'level' => Request()->level,
+                'email' => Request()->email,
+                'password' => bcrypt(Request()->password),
+                'jeniskelamin' => Request()->jk,
+                'foto' => $namafile,
+                'wali' => "",
+                'catatan' => "",
+            ];
+        } else {
+            //masukan inputan data ke database
+            if (Request()->jk = "Perempuan") {
+                $data = [
+                    'nama' => Request()->nama,
+                    'jurusan' => Request()->jurusan,
+                    'level' => "mahasiswa",
+                    'email' => Request()->email,
+                    'password' => bcrypt(Request()->password),
+                    'jeniskelamin' => Request()->jk,
+                    'foto' => "defaultcw.png",
+                    'wali' => "",
+                    'catatan' => "",
+                ];
+            } else {
+                $data = [
+                    'nama' => Request()->nama,
+                    'jurusan' => Request()->jurusan,
+                    'level' => "mahasiswa",
+                    'email' => Request()->email,
+                    'password' => bcrypt(Request()->password),
+                    'jeniskelamin' => Request()->jk,
+                    'foto' => "default.png",
+                    'wali' => "",
+                    'catatan' => "",
+                ];
+            }
+        }
+        //setelah melalui kondisi di atas lalu masukan data ke database menggunakan model
         $this->AdminModel->tambahdatamahasiswa($data);
         return redirect()->route('datamahasiswa')->with('Pesan', 'Data telah berhasil di tambahkan');
     }
@@ -186,5 +241,22 @@ class AdminController extends BaseController
         ];
         $this->AdminModel->tambahdatariwayat($riwayat);
         return redirect()->route('dataperwalian')->with('Pesan', 'Catatan Berhasil Di Tambahkan');
+    }
+
+    public function cari_dosen(Request $request)
+    {
+        //menangkap data pencarian
+
+        $cari = $request->cari;
+        $data = [
+            'dosen' => $this->AdminModel->caridosen($cari)
+        ];
+        //mengambil data dari table dosen sesuai penncarian
+        // $dosen = DB::table('tbl_dosen')
+        // ->where('nama','like',"%".$cari."%")
+        // ->paginate();
+
+        //mengirim data dosen ke view data dosen
+        return view('v_datadosen', $data);
     }
 }
