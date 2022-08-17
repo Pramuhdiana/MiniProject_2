@@ -24,4 +24,11 @@ class DosenModel extends Authenticatable
     {
         DB::table('tbl_riwayat')->insert($riwayat);
     }
+
+    public function riwayat($nama)
+    {
+        return DB::table('tbl_riwayat')
+            ->where('nama_dosen', $nama)
+            ->get();
+    }
 }

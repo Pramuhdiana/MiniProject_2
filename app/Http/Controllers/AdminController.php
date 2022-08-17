@@ -70,7 +70,7 @@ class AdminController extends BaseController
             ];
         } else {
             //jika admin tidak upload foto
-            if (Request()->jk = "Perempuan") {
+            if (Request()->jk == "Perempuan") {
                 $data = [
                     'nama' => Request()->nama,
                     'level' => "dosen",
@@ -123,7 +123,7 @@ class AdminController extends BaseController
             ];
         } else {
             //masukan inputan data ke database
-            if (Request()->jk = "Perempuan") {
+            if (Request()->jk == "Laki-Laki") {
                 $data = [
                     'nama' => Request()->nama,
                     'jurusan' => Request()->jurusan,
@@ -131,7 +131,7 @@ class AdminController extends BaseController
                     'email' => Request()->email,
                     'password' => bcrypt(Request()->password),
                     'jeniskelamin' => Request()->jk,
-                    'foto' => "defaultcw.png",
+                    'foto' => "default.png",
                     'wali' => "",
                     'catatan' => "",
                 ];
@@ -143,7 +143,7 @@ class AdminController extends BaseController
                     'email' => Request()->email,
                     'password' => bcrypt(Request()->password),
                     'jeniskelamin' => Request()->jk,
-                    'foto' => "default.png",
+                    'foto' => "defaultcw.png",
                     'wali' => "",
                     'catatan' => "",
                 ];

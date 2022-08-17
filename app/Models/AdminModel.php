@@ -15,11 +15,14 @@ class AdminModel extends Authenticatable
 
     public function alldata()
     {
-        return DB::table('tbl_dosen')->get(); //fungsi untuk menampilkan semua data di tbl_dosen
+        //fungsi untuk menampilkan semua data di tbl_dosen dengan hanya menampilkan 5 setiap page
+        //return DB::table('tbl_dosen')->paginate(5);
+        return DB::table('tbl_dosen')->get(); //fungsi untuk menampilakan semua data
     }
     public function alldatamahasiswa()
     {
         return DB::table('tbl_mahasiswa')->get(); //fungsi untuk menampilkan semua data di tbl_mahasiswa
+        //return DB::table('tbl_mahasiswa')->paginate(2);
     }
     public function tambahdata($data)
     {

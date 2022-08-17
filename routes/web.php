@@ -102,3 +102,6 @@ Route::group(['middleware' => ['auth:user,mahasiswa', 'ceklevel:admin,mahasiswa'
     Route::get('/mahasiswa/catatan/{id}', [MahasiswaController::class, 'tambah_catatan']);
     Route::post('/mahasiswa/addcatatan/{id}', [MahasiswaController::class, 'update_catatan']);
 });
+
+//route menampilkan histori perwalian by name
+Route::get('/dosen/perwalian/{nama}', [DosenController::class, 'histori'])->name('histori');

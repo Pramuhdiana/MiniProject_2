@@ -25,4 +25,13 @@ class DosenController extends BaseController
         ];
         return view('v_dosen', $data);
     }
+
+    public function histori($nama)
+    {
+        // $name = "dosen kelima";
+        $data = [
+            'riwayat' => $this->DosenModel->riwayat($nama),
+        ];
+        return view('v_dosenhistori', $data);
+    }
 }
